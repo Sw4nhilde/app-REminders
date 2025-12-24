@@ -4,6 +4,12 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
+// Optionally suppress PHP deprecation warnings (useful on PHP 8.5+)
+// Controlled via env: SUPPRESS_DEPRECATIONS=true|false
+if (getenv('SUPPRESS_DEPRECATIONS') === 'true') {
+    error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+}
+
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
