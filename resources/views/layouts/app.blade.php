@@ -29,14 +29,32 @@
 
     @livewireScripts
 
-    {{-- MATIKAN SERVICE WORKER DULU BIAR GA NGACAU CACHE --}}
-    {{-- 
     <script>
+        // Register service worker for PWA capabilities
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js');
+            window.addEventListener('load', () => {
+                navigator.serviceWorker
+                    .register('/sw.js')
+                    .then(reg => {
+                        // Listen for updates and prompt refresh
+                        if (reg.waiting) {
+                            reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+                        }
+                        reg.addEventListener('updatefound', () => {
+                            const newWorker = reg.installing;
+                            if (!newWorker) return;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // New content available; refresh to update assets
+                                    console.log('New version available. Refresh to update.');
+                                }
+                            });
+                        });
+                    })
+                    .catch(err => console.error('SW registration failed:', err));
+            });
         }
-    </script> 
-    --}}
+    </script>
 
     <script>
         document.addEventListener('alpine:init', () => {

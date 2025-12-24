@@ -1,5 +1,5 @@
-const CACHE = 'reminderapps-v1';
-const ASSETS = ['/', '/dashboard'];
+const CACHE = 'reminderapps-v2';
+const ASSETS = ['/', '/dashboard', '/offline.html'];
 
 self.addEventListener('install', event => {
   event.waitUntil(
@@ -21,14 +21,60 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
-self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET') return;
-  if (new URL(event.request.url).origin !== self.location.origin) return;
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
 
+self.addEventListener('fetch', event => {
+  const req = event.request;
+
+  // Only handle same-origin GET requests
+  if (req.method !== 'GET') return;
+  const url = new URL(req.url);
+  if (url.origin !== self.location.origin) return;
+
+  // Navigation requests: network-first, fallback to offline page
+  if (req.mode === 'navigate') {
+    event.respondWith(
+      fetch(req)
+        .then(res => {
+          // Cache the successful response for future
+          const copy = res.clone();
+          caches.open(CACHE).then(c => c.put(req, copy)).catch(() => {});
+          return res;
+        })
+        .catch(() => caches.match('/offline.html'))
+    );
+    return;
+  }
+
+  // Static assets: cache-first
+  const destination = req.destination;
+  const cacheFirstTypes = ['style', 'script', 'image', 'font'];
+  if (cacheFirstTypes.includes(destination) || /\.(css|js|png|jpg|jpeg|svg|webp|woff2?)$/i.test(url.pathname)) {
+    event.respondWith(
+      caches.match(req).then(cached => {
+        if (cached) return cached;
+        return fetch(req).then(res => {
+          const copy = res.clone();
+          caches.open(CACHE).then(c => c.put(req, copy)).catch(() => {});
+          return res;
+        });
+      })
+    );
+    return;
+  }
+
+  // Default: network-first with cache fallback
   event.respondWith(
-    caches.match(event.request).then(cached => {
-      if (cached) return cached;
-      return fetch(event.request);
-    })
+    fetch(req)
+      .then(res => {
+        const copy = res.clone();
+        caches.open(CACHE).then(c => c.put(req, copy)).catch(() => {});
+        return res;
+      })
+      .catch(() => caches.match(req))
   );
 });

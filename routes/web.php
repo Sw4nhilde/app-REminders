@@ -2,9 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\TaskController;
 
 // ============== AUTH ==============
+
+// Halaman register
+Route::get('/register', [RegisterController::class, 'show'])
+    ->name('register')
+    ->middleware('guest');
+
+// Proses register
+Route::post('/register', [RegisterController::class, 'register'])
+    ->name('register.process')
+    ->middleware('guest');
 
 // Halaman login
 Route::get('/login', [LoginController::class, 'showLoginForm'])

@@ -8,9 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('nim')->unique()->after('id');
-        });
+        // Guard against duplicate column when `nim` already exists in users table
+        if (!Schema::hasColumn('users', 'nim')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('nim')->unique()->after('id');
+            });
+        }
     }
 
     public function down(): void
