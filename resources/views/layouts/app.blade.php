@@ -7,12 +7,13 @@
 
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+    {{-- CSS Assets --}}
+    <link rel="stylesheet" href="/css/app.css">
+
     {{-- PWA (boleh dinyalakan lagi nanti kalau sudah stabil) --}}
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#8b5cf6">
     <link rel="apple-touch-icon" href="/icon-192.png">
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @livewireStyles
 
@@ -28,6 +29,10 @@
     </div>
 
     @livewireScripts
+
+    {{-- JS Assets --}}
+    <script defer src="/js/bootstrap.js"></script>
+    <script defer src="/js/app.js"></script>
 
     <script>
         // Register service worker for PWA capabilities
