@@ -23,5 +23,8 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('production')) {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
+
+        // Set API token expiration (7 days)
+        \Laravel\Sanctum\Sanctum::$personalAccessTokensExpireInMinutes = 60 * 24 * 7;
     }
 }

@@ -1,5 +1,19 @@
 # ReminderApps – Deployment Notes
 
+## REST API
+
+**ReminderApps sekarang punya REST API!** 🚀
+
+- **Endpoint:** `/api/*`
+- **Authentication:** Laravel Sanctum (Bearer Token)
+- **Format:** JSON responses
+- **Documentation:** Lihat [API_DOCUMENTATION.md](API_DOCUMENTATION.md)
+
+**Quick Start:**
+1. Login: `POST /api/login` → dapat token
+2. Gunakan token di header: `Authorization: Bearer {token}`
+3. CRUD tasks: `GET/POST/PUT/DELETE /api/tasks`
+
 ## Railway MySQL Configuration
 - **Single URL**: Set `DATABASE_URL=${MYSQL_URL}` and `DB_CONNECTION=mysql`.
 - **Individual fields**: Set `DB_HOST=${MYSQLHOST}`, `DB_PORT=${MYSQLPORT}`, `DB_DATABASE=${MYSQLDATABASE}`, `DB_USERNAME=${MYSQLUSER}`, `DB_PASSWORD=${MYSQLPASSWORD}`.
