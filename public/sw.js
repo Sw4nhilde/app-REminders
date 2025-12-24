@@ -1,3 +1,28 @@
+/*
+===============================================================================
+📱 PWA - SERVICE WORKER
+===============================================================================
+Service Worker untuk Progressive Web App functionality.
+
+Fitur:
+1. Static Asset Caching (CSS, JS, images)
+2. Offline Fallback Page
+3. Runtime Caching Strategies:
+   - Navigation: Network-first with offline fallback
+   - Static assets: Cache-first
+   - API calls: Network-first with cache fallback
+
+4. Cache Management:
+   - Auto cleanup old caches
+   - Version-based cache invalidation
+
+5. Background Sync (future)
+6. Push Notifications (future)
+
+File ini di-register di layouts/app.blade.php
+===============================================================================
+*/
+
 const CACHE = 'reminderapps-v2';
 const ASSETS = ['/', '/dashboard', '/offline.html'];
 

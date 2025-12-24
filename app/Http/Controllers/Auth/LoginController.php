@@ -1,5 +1,22 @@
 <?php
 
+/*
+===============================================================================
+🔐 AUTENTIFIKASI - Login Controller (Web)
+===============================================================================
+Controller untuk autentifikasi user via web browser (session-based).
+
+Berbeda dengan API authentication:
+- Web: Session & cookies (untuk browser)
+- API: Bearer token (untuk mobile/external apps)
+
+Endpoints:
+- GET  /login  → Show login form
+- POST /login  → Process login (session-based)
+- POST /logout → Logout dan destroy session
+===============================================================================
+*/
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;

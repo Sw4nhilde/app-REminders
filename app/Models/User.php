@@ -1,5 +1,22 @@
 <?php
 
+/*
+===============================================================================
+🔐 AUTENTIFIKASI - User Model
+===============================================================================
+Model untuk user dengan fitur autentifikasi lengkap:
+
+1. HasFactory → Factory untuk testing/seeding
+2. Notifiable → Untuk kirim notifikasi (email, SMS, dll)
+3. HasApiTokens → Laravel Sanctum untuk API authentication (Web Service)
+
+Password otomatis di-hash menggunakan bcrypt.
+Support dual authentication:
+- Session-based (web browser)
+- Token-based (API/Web Service)
+===============================================================================
+*/
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;

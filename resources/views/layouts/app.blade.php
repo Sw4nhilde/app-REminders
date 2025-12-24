@@ -10,7 +10,23 @@
     {{-- CSS Assets --}}
     <link rel="stylesheet" href="/css/app.css">
 
-    {{-- PWA (boleh dinyalakan lagi nanti kalau sudah stabil) --}}
+    {{--
+    ============================================================================
+    📱 PWA (Progressive Web App) Configuration
+    ============================================================================
+    ReminderApps dapat di-install sebagai aplikasi standalone di device.
+    
+    Fitur PWA:
+    - Installable (Add to Home Screen)
+    - Offline support (Service Worker)
+    - App-like experience
+    - Push notifications ready
+    
+    Files:
+    - /public/manifest.json → App metadata & icons
+    - /public/sw.js → Service Worker untuk caching & offline
+    ============================================================================
+    --}}
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#8b5cf6">
     <link rel="apple-touch-icon" href="/icon-192.png">
@@ -34,6 +50,19 @@
     <script defer src="/js/bootstrap.js"></script>
     <script defer src="/js/app.js"></script>
 
+    {{--
+    ============================================================================
+    📱 PWA - Service Worker Registration
+    ============================================================================
+    Mendaftarkan Service Worker untuk PWA functionality:
+    - Cache static assets (CSS, JS, images)
+    - Offline fallback page
+    - Network-first strategy untuk API calls
+    - Cache-first untuk static resources
+    
+    File: /public/sw.js
+    ============================================================================
+    --}}
     <script>
         // Register service worker for PWA capabilities
         if ('serviceWorker' in navigator) {

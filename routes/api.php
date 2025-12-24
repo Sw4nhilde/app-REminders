@@ -1,5 +1,20 @@
 <?php
 
+/*
+===============================================================================
+🌐 WEB SERVICE / REST API ROUTES
+===============================================================================
+File ini berisi semua endpoint REST API untuk ReminderApps.
+Menggunakan Laravel Sanctum untuk token-based authentication.
+
+Base URL: /api
+Authentication: Bearer Token (dari POST /api/login)
+Format: JSON Request & Response
+
+Dokumentasi lengkap: lihat API_DOCUMENTATION.md
+===============================================================================
+*/
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\TaskApiController;
 
@@ -14,8 +29,28 @@ use App\Http\Controllers\Api\TaskApiController;
 |
 */
 
+/*
+===============================================================================
+🔐 AUTENTIFIKASI - API Authentication (Web Service)
+===============================================================================
+Endpoint untuk login dan mendapatkan Bearer Token untuk akses API.
+Token ini digunakan untuk semua request ke protected endpoints.
+===============================================================================
+*/
+
 // API Authentication - Login untuk dapat token
 Route::post('/login', [TaskApiController::class, 'login'])->name('api.login');
+
+/*
+===============================================================================
+🌐 WEB SERVICE - Protected API Endpoints
+===============================================================================
+Semua endpoint di bawah ini memerlukan Bearer Token di header:
+Authorization: Bearer {token}
+
+Menggunakan middleware 'auth:sanctum' untuk validasi token.
+===============================================================================
+*/
 
 // Protected API Routes - butuh authentication
 Route::middleware('auth:sanctum')->group(function () {

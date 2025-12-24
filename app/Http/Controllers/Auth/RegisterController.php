@@ -1,5 +1,22 @@
 <?php
 
+/*
+===============================================================================
+🔐 AUTENTIFIKASI - Register Controller (Web)
+===============================================================================
+Controller untuk registrasi user baru via web browser.
+
+Setelah registrasi berhasil:
+- User otomatis login (session-based)
+- Redirect ke dashboard
+
+Validasi:
+- NIM: unique, required
+- Password: required, min 8 characters, confirmed
+- Name & Email: required
+===============================================================================
+*/
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;

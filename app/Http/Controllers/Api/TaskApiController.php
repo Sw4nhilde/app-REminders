@@ -1,5 +1,33 @@
 <?php
 
+/*
+===============================================================================
+🌐 WEB SERVICE / REST API CONTROLLER
+===============================================================================
+Controller ini menangani semua request API untuk ReminderApps.
+
+Fitur:
+- Token-based authentication (Laravel Sanctum)
+- JSON Request & Response
+- RESTful CRUD operations untuk Tasks
+- User ownership validation
+- Rate limiting (60 requests/minute)
+
+Endpoints:
+- POST   /api/login          → Get Bearer Token
+- GET    /api/user           → Get authenticated user info
+- GET    /api/tasks          → List all tasks
+- POST   /api/tasks          → Create new task
+- GET    /api/tasks/{id}     → Get single task
+- PUT    /api/tasks/{id}     → Update task
+- DELETE /api/tasks/{id}     → Delete task
+- POST   /api/tasks/{id}/toggle → Toggle completion
+- POST   /api/logout         → Revoke token
+
+Dokumentasi lengkap: lihat API_DOCUMENTATION.md
+===============================================================================
+*/
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -12,13 +40,20 @@ use Illuminate\Validation\ValidationException;
 
 class TaskApiController extends Controller
 {
-    /**
-     * Login dan generate token untuk API access
-     * 
-     * POST /api/login
-     * Body: { "nim": "123456", "password": "secret" }
-     * Response: { "token": "...", "user": {...} }
-     */
+    /*
+    ===========================================================================
+    🔐 AUTENTIFIKASI - Login API (Web Service)
+    ===========================================================================
+    Endpoint untuk autentifikasi user dan generate Bearer Token.
+    Token ini digunakan untuk akses ke semua protected endpoints.
+    
+    POST /api/login
+    Body: { "nim": "123456", "password": "secret" }
+    Response: { "token": "...", "user": {...} }
+    
+    Token expire setelah 7 hari (604800 minutes).
+    ===========================================================================
+    */
     public function login(Request $request)
     {
         $request->validate([

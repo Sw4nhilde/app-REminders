@@ -5,7 +5,14 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\TaskController;
 
-// ============== AUTH ==============
+/*
+===============================================================================
+🔐 AUTENTIFIKASI - Web Authentication (Traditional)
+===============================================================================
+Routes untuk login, register, dan logout menggunakan session-based auth.
+Berbeda dengan API auth yang menggunakan token.
+===============================================================================
+*/
 
 // Halaman register
 Route::get('/register', [RegisterController::class, 'show'])
